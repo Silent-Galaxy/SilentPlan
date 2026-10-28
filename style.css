@@ -1,0 +1,452 @@
+:root {
+    --bg-main: #0b0f19;
+    --bg-panel: #111827;
+    --bg-card: #1f2937;
+    --text-main: #f9fafb;
+    --text-muted: #9ca3af;
+    --primary: #38bdf8;
+    --accent: #10b981;
+    --danger: #ef4444;
+    --border: #374151;
+    --active-node-border: #38bdf8;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+    background: var(--bg-main);
+    color: var(--text-main);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.app-header {
+    background: var(--bg-panel);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    color: var(--primary);
+    width: 28px;
+    height: 28px;
+}
+
+.logo-area span { color: var(--primary); }
+.logo-area small { color: var(--text-muted); font-size: 11px; display: block; }
+.header-actions { display: flex; gap: 8px; }
+
+/* Buttons */
+.btn {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 12.5px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: 0.2s all;
+}
+
+.btn:hover { background: #374151; }
+.btn-accent { background: #059669; border-color: #10b981; }
+.btn-accent:hover { background: #10b981; }
+.btn-primary { background: #0284c7; border-color: var(--primary); color: white; text-decoration: none; }
+.btn-danger { background: #991b1b; border-color: var(--danger); }
+.block-btn { width: 100%; justify-content: center; margin-top: 10px; }
+.btn-sm { padding: 4px 10px; font-size: 11px; }
+
+/* Main Layout Grid */
+.app-container {
+    display: grid;
+    grid-template-columns: 260px 1fr 360px;
+    flex: 1;
+    height: calc(100vh - 65px);
+}
+
+/* Sidebar Toolbars */
+.sidebar-toolbox, .sidebar-inspector {
+    background: var(--bg-panel);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    overflow-y: auto;
+    border-left: 1px solid var(--border);
+    border-right: 1px solid var(--border);
+}
+
+.section-title {
+    font-size: 13px;
+    font-weight: bold;
+    color: var(--primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding-bottom: 6px;
+}
+
+/* Shape Grid Catalog */
+.shape-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+}
+
+.tool-card {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 11.5px;
+    transition: 0.2s all;
+}
+
+.tool-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    background: #253347;
+}
+
+.tool-group { display: flex; flex-direction: column; gap: 8px; }
+.tool-btn {
+    background: var(--bg-card);
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.tool-btn.active { background: #1e3a5f; border-color: var(--accent); }
+
+.form-select, .form-input, .form-textarea {
+    width: 100%;
+    padding: 8px;
+    background: #0f172a;
+    color: #e2e8f0;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 12px;
+    outline: none;
+}
+.form-select:focus, .form-input:focus, .form-textarea:focus { border-color: var(--primary); }
+
+/* Workspace Canvas */
+.workspace-wrapper {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background: #080d1a;
+}
+
+.workspace-header {
+    background: rgba(17, 24, 39, 0.85);
+    padding: 8px 16px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    border-bottom: 1px solid var(--border);
+}
+
+.badge { background: #1f2937; padding: 3px 8px; border-radius: 12px; font-size: 11px; }
+
+.canvas-area {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    background-image: 
+        radial-gradient(rgba(255,255,255,0.08) 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.connections-layer {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+}
+
+/* ========================================================= */
+/* استایل اشکال مختلف المان‌ها (SHAPES ENGINE) */
+/* ========================================================= */
+
+.uml-node {
+    position: absolute;
+    cursor: move;
+    user-select: none;
+    transition: box-shadow 0.2s, border 0.2s;
+    min-width: 140px;
+}
+
+.uml-node.selected-node {
+    outline: 2px dashed #38bdf8 !important;
+    outline-offset: 4px;
+}
+
+/* ۱. شکل کلاس (Standard UML Class 3-Compartment) */
+.uml-node.shape-class {
+    background: #1e293b;
+    border: 2px solid var(--node-color, #0284c7);
+    border-radius: 8px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+.shape-class .node-header {
+    background: rgba(2, 132, 199, 0.25);
+    padding: 6px;
+    text-align: center;
+    font-weight: bold;
+    border-bottom: 1px solid var(--border);
+    font-size: 12px;
+}
+.shape-class .node-body {
+    padding: 8px;
+    font-family: 'JetBrains Mono', Consolas, monospace;
+    font-size: 11px;
+    color: #cbd5e1;
+    white-space: pre-wrap;
+}
+
+/* ۲. شکل Use-Case (بیضی استاندارد) */
+.uml-node.shape-usecase {
+    background: #1e293b;
+    border: 2px solid var(--node-color, #059669);
+    border-radius: 50px;
+    min-width: 150px;
+    min-height: 70px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 10px 20px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+}
+.shape-usecase .node-header { font-weight: bold; font-size: 13px; }
+.shape-usecase .node-body { font-size: 11px; color: var(--text-muted); }
+
+/* ۳. شکل دیتابیس (استوانه سه‌بعدی) */
+.uml-node.shape-cylinder {
+    background: #1e293b;
+    border: 2px solid var(--node-color, #ea580c);
+    border-radius: 12px / 24px;
+    min-width: 130px;
+    padding: 15px 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    text-align: center;
+}
+.shape-cylinder .node-header { font-weight: bold; font-size: 12.5px; margin-bottom: 4px; }
+.shape-cylinder .node-body { font-size: 11px; color: #94a3b8; }
+
+/* ۴. شکل اکتور (Actor Card) */
+.uml-node.shape-actor {
+    background: #111827;
+    border: 2px solid var(--node-color, #db2777);
+    border-radius: 16px;
+    min-width: 120px;
+    text-align: center;
+    padding: 12px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.4);
+}
+.shape-actor .node-header { font-weight: bold; font-size: 12px; margin-top: 4px; }
+
+/* ۵. شکل Cloud */
+.uml-node.shape-cloud {
+    background: #1e293b;
+    border: 2px dashed var(--node-color, #7c3aed);
+    border-radius: 30px;
+    padding: 16px 20px;
+    text-align: center;
+}
+
+/* ========================================================= */
+/* انیمیشن‌های چندگانه برای نودها (ANIMATION ENGINE) */
+/* ========================================================= */
+
+/* شناور مواج */
+.anim-float {
+    animation: floatingEffect 3s ease-in-out infinite;
+}
+@keyframes floatingEffect {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+}
+
+/* پالس نوری */
+.anim-pulse {
+    animation: pulsingEffect 2s infinite;
+}
+@keyframes pulsingEffect {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--node-color, #0284c7)); }
+    50% { transform: scale(1.03); filter: drop-shadow(0 0 15px var(--node-color, #0284c7)); }
+}
+
+/* درخشش نئون سایبرپانک */
+.anim-neon {
+    animation: neonGlow 1.5s ease-in-out infinite alternate;
+}
+@keyframes neonGlow {
+    from { box-shadow: 0 0 5px var(--node-color, #38bdf8), 0 0 10px var(--node-color, #38bdf8); }
+    to { box-shadow: 0 0 20px var(--node-color, #38bdf8), 0 0 35px var(--node-color, #38bdf8); }
+}
+
+/* حاشیه گردان */
+.anim-spin-border {
+    border-style: dotted !important;
+    animation: spinRotate 10s linear infinite;
+}
+@keyframes spinRotate {
+    0% { filter: hue-rotate(0deg); }
+    100% { filter: hue-rotate(360deg); }
+}
+
+/* ========================================================= */
+/* استایل و انیمیشن اتصالات SVG */
+/* ========================================================= */
+
+.relation-line {
+    stroke: var(--primary);
+    stroke-width: 2.5;
+    fill: none;
+    transition: 0.2s all;
+}
+
+.anim-flow-dash {
+    stroke-dasharray: 8, 5;
+    animation: dashMove 1s linear infinite;
+}
+@keyframes dashMove {
+    from { stroke-dashoffset: 26; }
+    to { stroke-dashoffset: 0; }
+}
+
+.anim-flow-glow {
+    stroke: var(--accent);
+    filter: drop-shadow(0 0 6px var(--accent));
+    stroke-dasharray: 6;
+    animation: dashMove 0.8s linear infinite;
+}
+
+.anim-flow-laser {
+    stroke: #f43f5e;
+    stroke-width: 3;
+    filter: drop-shadow(0 0 8px #f43f5e);
+    stroke-dasharray: 12, 12;
+    animation: dashMove 0.5s linear infinite;
+}
+
+/* ========================================================= */
+/* پنل بازرس (Inspector) و خروجی کد استاندارد LTR */
+/* ========================================================= */
+
+.panel-tabs {
+    display: flex;
+    background: #0f172a;
+    border-radius: 8px;
+    padding: 3px;
+    gap: 4px;
+}
+
+.tab-btn {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    padding: 8px;
+    border-radius: 6px;
+    font-size: 11.5px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+}
+
+.tab-btn.active {
+    background: var(--bg-card);
+    color: var(--text-main);
+    font-weight: bold;
+}
+
+.tab-content { display: none; flex-direction: column; gap: 12px; }
+.tab-content.active { display: flex; }
+
+.code-box-wrapper {
+    background: #080d1a;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px;
+    position: relative;
+    /* اعمال اصلاح LTR صریح جهت جلوگیری از معکوس شدن عبارات */
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+#puml-code {
+    width: 100%;
+    height: 380px;
+    background: transparent;
+    border: none;
+    color: #38bdf8;
+    font-family: 'JetBrains Mono', 'Courier New', monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    outline: none;
+    resize: vertical;
+    white-space: pre;
+    direction: ltr !important;
+    text-align: left !important;
+}
+
+.color-palette {
+    display: flex;
+    gap: 8px;
+    margin: 4px 0;
+}
+
+.color-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: 0.2s transform;
+}
+.color-dot:hover { transform: scale(1.15); border-color: white; }
+
+.hint-box {
+    padding: 20px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 12px;
+    border: 1px dashed var(--border);
+    border-radius: 8px;
+}
