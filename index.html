@@ -1,161 +1,54 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DiagramCraft Studio Pro | ماژولار و متحرک</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SilentPlan Studio</title>
+  <script type="module" crossorigin src="./assets/index-CB3fkkws.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-DNP4uPv8.css">
 </head>
 <body>
-    <header class="app-header">
-        <div class="logo-area">
-            <i data-lucide="cpu" class="brand-icon"></i>
-            <div>
-                <h2>DiagramCraft <span>Pro</span></h2>
-                <small>استودیو ماژولار بصری‌سازی شیءگرا و متحرک PlantUML</small>
-            </div>
-        </div>
-        <div class="header-actions">
-            <button id="btn-toggle-all-anim" class="btn btn-accent"><i data-lucide="play-circle"></i> پویانمایی سراسری</button>
-            <button id="btn-save" class="btn btn-secondary"><i data-lucide="save"></i> ذخیره پروژه</button>
-            <button id="btn-export-json" class="btn btn-secondary"><i data-lucide="download"></i> دانلود JSON</button>
-            <label class="btn btn-secondary file-upload">
-                <i data-lucide="upload"></i> بارگذاری JSON
-                <input type="file" id="file-import" accept=".json" style="display:none;">
-            </label>
-        </div>
+  <div id="app">
+    <!-- نوار ابزار بالا -->
+    <header class="toolbar">
+      <div class="logo">🎨 SilentPlan Studio</div>
+      <div class="actions">
+        <button id="btn-export-png" class="btn">🖼 خروجی PNG (باکیفیت)</button>
+        <button id="btn-export-pdf" class="btn">📄 خروجی PDF</button>
+        <button id="btn-export-plantuml" class="btn btn-accent">🌱 تبدیل به PlantUML</button>
+      </div>
     </header>
 
-    <main class="app-container">
-        <!-- تولبار اشکال و ساختارها -->
-        <aside class="sidebar-toolbox">
-            <div class="section-title"><i data-lucide="shapes"></i> کاتالوگ اشکال و المان‌ها</div>
-            <div class="shape-grid">
-                <button class="tool-card" data-shape="class" data-type="class">
-                    <i data-lucide="table"></i>
-                    <span>کلاس ۳ بخشی</span>
-                </button>
-                <button class="tool-card" data-shape="usecase" data-type="usecase">
-                    <i data-lucide="circle"></i>
-                    <span>Use Case بیضی</span>
-                </button>
-                <button class="tool-card" data-shape="cylinder" data-type="database">
-                    <i data-lucide="database"></i>
-                    <span>دیتابیس استوانه</span>
-                </button>
-                <button class="tool-card" data-shape="actor" data-type="actor">
-                    <i data-lucide="user-check"></i>
-                    <span>اکتور (Actor)</span>
-                </button>
-                <button class="tool-card" data-shape="cloud" data-type="cloud">
-                    <i data-lucide="cloud"></i>
-                    <span>سرویس ابری</span>
-                </button>
-            </div>
+    <div class="workspace">
+      <!-- سایدبار شکل‌ها -->
+      <aside class="sidebar">
+        <h3>شکل‌ها (بکشید روی صفحه)</h3>
+        <div class="shape-palette">
+          <div class="shape-item" draggable="true" data-shape="actor">
+            <span class="icon">👤</span>
+            <span>اکتور (Actor)</span>
+          </div>
+          <div class="shape-item" draggable="true" data-shape="cloud">
+            <span class="icon">☁️</span>
+            <span>ابر (Cloud)</span>
+          </div>
+          <div class="shape-item" draggable="true" data-shape="database">
+            <span class="icon">🗄️</span>
+            <span>دیتابیس (DB)</span>
+          </div>
+          <div class="shape-item" draggable="true" data-shape="rect">
+            <span class="icon">⏹️</span>
+            <span>جعبه (Process)</span>
+          </div>
+        </div>
+      </aside>
 
-            <div class="section-title"><i data-lucide="git-merge"></i> برقراری پیوند و جریان</div>
-            <div class="tool-group">
-                <button id="btn-connect-mode" class="tool-btn connect-btn">
-                    <i data-lucide="link"></i> <span>فعال‌سازی اتصال گره‌ها</span>
-                </button>
-                <select id="relation-type" class="form-select">
-                    <option value="-->">ارتباط معمولی (-->)</option>
-                    <option value="--|>">وراثت / تعمیم (--|>)</option>
-                    <option value="..>">وابستگی ضعیف (..>)</option>
-                    <option value="*--">ترکیب Composition (*--)</option>
-                    <option value="o--">تجمع Aggregation (o--)</option>
-                </select>
-                <select id="relation-anim-type" class="form-select">
-                    <option value="anim-flow-dash">جریان خط‌چین متحرک</option>
-                    <option value="anim-flow-glow">جریان درخشان نئونی</option>
-                    <option value="anim-flow-laser">جریان لیزری پالسی</option>
-                </select>
-            </div>
-            
-            <button id="btn-clear" class="btn btn-danger"><i data-lucide="trash-2"></i> پاکسازی بوم</button>
-        </aside>
+      <!-- محیط بوم و طراحی -->
+      <main class="canvas-container" id="canvas-container">
+        <!-- بوم Konva اینجا ساخته می‌شود -->
+      </main>
+    </div>
+  </div>
 
-        <!-- بوم طراحی گرافیکی -->
-        <section class="workspace-wrapper">
-            <div class="workspace-header">
-                <span id="canvas-status"><i data-lucide="mouse-pointer"></i> روی بوم کلیک کنید یا نودی را برای سفارشی‌سازی انتخاب نمایید</span>
-                <span class="badge">Canvas Engine v2.0</span>
-            </div>
-            <div id="canvas" class="canvas-area">
-                <svg id="svg-connections" class="connections-layer"></svg>
-            </div>
-        </section>
-
-        <!-- پنل بازرس نود و خروجی کد -->
-        <aside class="sidebar-inspector">
-            <!-- تب‌های پنل راست -->
-            <div class="panel-tabs">
-                <button class="tab-btn active" data-tab="tab-code"><i data-lucide="code-2"></i> خروجی کد</button>
-                <button class="tab-btn" data-tab="tab-inspector"><i data-lucide="sliders"></i> بازرس و CSS اختصاصی</button>
-            </div>
-
-            <!-- تب کد PlantUML -->
-            <div id="tab-code" class="tab-content active">
-                <div class="code-actions">
-                    <button id="btn-copy-code" class="btn btn-sm"><i data-lucide="copy"></i> کپی سورس</button>
-                </div>
-                <div class="code-box-wrapper" dir="ltr">
-                    <textarea id="puml-code" spellcheck="false" placeholder="Generating PlantUML..."></textarea>
-                </div>
-                <a id="btn-open-plantuml" target="_blank" class="btn btn-primary block-btn">
-                    <i data-lucide="external-link"></i> بازکردن مستقیم در ادیتور آنلاین
-                </a>
-            </div>
-
-            <!-- تب بازرس و تزریق CSS دلخواه به نود انتخاب شده -->
-            <div id="tab-inspector" class="tab-content">
-                <div id="inspector-empty" class="hint-box">یک نود را روی صفحه کلیک کنید تا مشخصات ظاهری، استایل و انیمیشن آن نمایان شود.</div>
-                <div id="inspector-form" style="display: none;" class="inspector-controls">
-                    <h4 id="ins-node-title">مشخصات نود</h4>
-                    
-                    <label>عنوان المان:</label>
-                    <input type="text" id="ins-name" class="form-input">
-
-                    <label>شکل هندسی نود:</label>
-                    <select id="ins-shape" class="form-select">
-                        <option value="class">کلاس استاندارد (Class)</option>
-                        <option value="usecase">بیضی (Use Case)</option>
-                        <option value="cylinder">سیلندر دیتابیس (Database)</option>
-                        <option value="actor">کارت اکتور (Actor)</option>
-                        <option value="cloud">ابر سرویس (Cloud)</option>
-                    </select>
-
-                    <label>پویانمایی و جلوه گرافیکی:</label>
-                    <select id="ins-anim" class="form-select">
-                        <option value="anim-none">بدون پویانمایی</option>
-                        <option value="anim-float">شناور مواج (Floating)</option>
-                        <option value="anim-pulse">ضربان نوری (Pulse)</option>
-                        <option value="anim-neon">حاشیه درخشان نئون (Cyber Glow)</option>
-                        <option value="anim-spin-border">حاشیه گردان رنگی (Spin Border)</option>
-                    </select>
-
-                    <label>رنگ پوسته المان:</label>
-                    <div class="color-palette">
-                        <span class="color-dot" data-color="#0284c7" style="background:#0284c7;"></span>
-                        <span class="color-dot" data-color="#059669" style="background:#059669;"></span>
-                        <span class="color-dot" data-color="#7c3aed" style="background:#7c3aed;"></span>
-                        <span class="color-dot" data-color="#db2777" style="background:#db2777;"></span>
-                        <span class="color-dot" data-color="#ea580c" style="background:#ea580c;"></span>
-                    </div>
-
-                    <label>تزریق مستقیم CSS دلخواه (Custom CSS):</label>
-                    <textarea id="ins-custom-css" dir="ltr" class="form-textarea" placeholder="border-radius: 20px; box-shadow: 0 0 20px red;"></textarea>
-
-                    <label>متن / ویژگی‌ها / متدها:</label>
-                    <textarea id="ins-body" dir="ltr" class="form-textarea" rows="4"></textarea>
-
-                    <button id="btn-delete-node" class="btn btn-danger btn-sm" style="margin-top: 15px;"><i data-lucide="trash"></i> حذف این نود</button>
-                </div>
-            </div>
-        </aside>
-    </main>
-
-    <script src="app.js"></script>
 </body>
 </html>

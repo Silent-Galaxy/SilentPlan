@@ -1,0 +1,108 @@
+﻿* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+body, html, #app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: #1e1e2f;
+  color: #fff;
+}
+
+.toolbar {
+  height: 55px;
+  background-color: #27293d;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  border-bottom: 1px solid #3d405b;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.btn {
+  background: #3a3f58;
+  border: 1px solid #565b7c;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-left: 8px;
+  transition: all 0.2s;
+}
+
+.btn:hover {
+  background: #4f567a;
+}
+
+.btn-accent {
+  background: #10b981;
+  border-color: #059669;
+}
+
+.btn-accent:hover {
+  background: #059669;
+}
+
+.workspace {
+  display: flex;
+  height: calc(100vh - 55px);
+}
+
+.sidebar {
+  width: 230px;
+  background-color: #27293d;
+  padding: 15px;
+  border-left: 1px solid #3d405b;
+}
+
+.sidebar h3 {
+  font-size: 0.9rem;
+  margin-bottom: 15px;
+  color: #a0aec0;
+}
+
+.shape-palette {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.shape-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background: #1e1e2f;
+  border: 1px dashed #565b7c;
+  border-radius: 8px;
+  cursor: grab;
+  user-select: none;
+  transition: transform 0.15s, border-color 0.15s;
+}
+
+.shape-item:hover {
+  transform: translateY(-2px);
+  border-color: #10b981;
+}
+
+.shape-item .icon {
+  font-size: 1.3rem;
+}
+
+.canvas-container {
+  flex: 1;
+  background-color: #161622;
+  background-image: radial-gradient(#2d314d 1px, transparent 1px);
+  background-size: 20px 20px;
+  position: relative;
+  overflow: hidden;
+}
